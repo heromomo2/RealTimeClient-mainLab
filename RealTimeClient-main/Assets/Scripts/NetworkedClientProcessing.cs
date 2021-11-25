@@ -28,7 +28,15 @@ static public class NetworkedClientProcessing
         {
             gameLogic.DestoryBalloon(int.Parse(csv[1]));
         }
-
+        else if (signifier == ServerToClientSignifiers.ActiviePlayers)
+        {
+            string Playerdata = "# " + csv[1] + " S: " + csv[2];
+            gameLogic.AddPlayerOnTheBoard(Playerdata);
+        }
+        else if (signifier == ServerToClientSignifiers.RemoveActiviePlayers)
+        {
+            gameLogic.ClearAllPlayersOnTheBoard();
+        }
         //gameLogic.DoSomething();
 
     }
@@ -100,6 +108,10 @@ static public class ServerToClientSignifiers
     public const int spawnBallon = 2;
 
     public const int BalloonPopped = 3;
+
+    public const int ActiviePlayers = 4;
+
+    public const int RemoveActiviePlayers = 5;
 }
 
 

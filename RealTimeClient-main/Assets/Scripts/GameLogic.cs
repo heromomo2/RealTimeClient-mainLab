@@ -1,18 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameLogic : MonoBehaviour
 {
     float durationUntilNextBalloon;
 
     Sprite circleTexture;
+
     LinkedList<GameObject> Balloons;
 
+    LinkedList<GameObject> PlayerSlots;
+
+   public GameObject Content;
+
+    public GameObject TextPrefab;
     void Start()
     {
         NetworkedClientProcessing.SetGameLogic(this);
+
         Balloons = new LinkedList<GameObject>();
+
+        PlayerSlots= new LinkedList<GameObject>();
+
+        GameObject[] allObjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
+        foreach (GameObject go in allObjects)
+        {
+            if (go.name == "Content")
+                Content = go;
+        }
+
     }
     void Update()
     {
@@ -64,6 +82,32 @@ public class GameLogic : MonoBehaviour
         {
             Balloons.Remove(DestroyMe);
             Destroy(DestroyMe);
+        }
+    }
+
+
+
+    public void AddPlayerOnTheBoard(string s)
+    {
+      //  Text prefabTextObject = (Text)Resources.Load("Prefab/Text.prefab", typeof(Text));
+
+        if (TextPrefab != null)
+        {
+            GameObject newObj = (GameObject)Instantiate(TextPrefab, Content.transform);
+            newObj.GetComponent<Text>().text = s;
+            PlayerSlots.AddLast(newObj);
+        }
+    }
+
+    public void ClearAllPlayersOnTheBoard()
+    {
+        if (PlayerSlots.Count != 0)
+        {
+            foreach (GameObject p in PlayerSlots)
+            {
+                Destroy(p);
+            }
+            PlayerSlots.Clear();
         }
     }
 }
