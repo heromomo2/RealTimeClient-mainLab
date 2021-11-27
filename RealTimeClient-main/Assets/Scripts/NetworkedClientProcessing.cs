@@ -37,6 +37,22 @@ static public class NetworkedClientProcessing
         {
             gameLogic.ClearAllPlayersOnTheBoard();
         }
+        else if (signifier == ServerToClientSignifiers.OldBalloon)
+        {
+            gameLogic.SetBalloonToOld(int.Parse(csv[1]));
+        }
+        else if (signifier == ServerToClientSignifiers.spawnOldBalloon)
+        {
+            float screenPositionXPercent = float.Parse(csv[1]);
+
+            float screenPositionYPercent = float.Parse(csv[2]);
+
+            int BalloonID = int.Parse(csv[3]);
+            Vector2 screenPosition = new Vector2(screenPositionXPercent * (float)Screen.width, screenPositionYPercent * (float)Screen.height);
+            gameLogic.SpawnNewBalloon(screenPosition, BalloonID);
+
+            gameLogic.SetBalloonToOld(BalloonID);
+        }
         //gameLogic.DoSomething();
 
     }
@@ -112,6 +128,10 @@ static public class ServerToClientSignifiers
     public const int ActiviePlayers = 4;
 
     public const int RemoveActiviePlayers = 5;
+
+    public const int OldBalloon = 6;
+
+    public const int spawnOldBalloon = 7;
 }
 
 

@@ -6,6 +6,8 @@ public class CircleClick : MonoBehaviour
 {
     public int balloonID;
 
+    public bool IsClikable = true;
+
     void Start()
     {
         
@@ -16,7 +18,10 @@ public class CircleClick : MonoBehaviour
     }
     void OnMouseDown()
     {
-        NetworkedClientProcessing.SendMessageToServer(ClientToServerSignifiers.BalloonClicked + "," + balloonID);
-        //Destroy(gameObject);
+        if (IsClikable)
+        {
+            NetworkedClientProcessing.SendMessageToServer(ClientToServerSignifiers.BalloonClicked + "," + balloonID);
+            //Destroy(gameObject);
+        }
     }
 }

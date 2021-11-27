@@ -110,5 +110,24 @@ public class GameLogic : MonoBehaviour
             PlayerSlots.Clear();
         }
     }
+
+    public void SetBalloonToOld (int BalloonID)
+    {
+        GameObject SearchBalloon = null;
+        foreach (GameObject b in Balloons)
+        {
+            if (b.GetComponent<CircleClick>().balloonID == BalloonID)
+            {
+                SearchBalloon = b;
+                break;
+            }
+        }
+        if (SearchBalloon != null)
+        {
+            SearchBalloon.GetComponent<CircleClick>().IsClikable = false;
+            SearchBalloon.GetComponent<SpriteRenderer>().color = Color.cyan;
+            
+        }
+    }
 }
 
